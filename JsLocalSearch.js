@@ -9,6 +9,8 @@
  * require min jQuery 1.x  
  * 
  * Date: 2019-07-02
+ *
+ * Esto sin Bernardo no se podria haber hecho
  */
 
 if (typeof Object.create !== "function") {
