@@ -29,21 +29,23 @@ if (typeof Object.create !== "function") {
         init: function (options, el) {
             var my = $(el);
             var base = this;
-            
-   
-       
-         if (options==undefined)  {options={}}
-         
-            var searchinput = (options.searchinput==undefined) ? "#gsearchsimple" : options.searchinput;
-            options.container = (options.container==undefined) ? "contsearch" : options.container;            
-            var containersearch =  (options.containersearch==undefined) ? "gsearch" : options.containersearch;
-            var mincaracteres =   (options.mincaracteres==undefined) ? 3 : options.mincaracteres;
-            var action = (options.action==undefined) ? "Show" : options.action;
-            var info = (options.info==undefined) ? false : options.info;
-            options.mark_text =   (options.mark_text==undefined) ? false : options.mark_text;
-            options.html_search =   (options.html_search==undefined) ? true : options.html_search;
 
-     
+
+
+            if (options == undefined) {
+                options = {}
+            }
+
+            var searchinput = (options.searchinput == undefined) ? "#gsearchsimple" : options.searchinput;
+            options.container = (options.container == undefined) ? "contsearch" : options.container;
+            var containersearch = (options.containersearch == undefined) ? "gsearch" : options.containersearch;
+            var mincaracteres = (options.mincaracteres == undefined) ? 3 : options.mincaracteres;
+            var action = (options.action == undefined) ? "Show" : options.action;
+            var info = (options.info == undefined) ? false : options.info;
+            options.mark_text = (options.mark_text == undefined) ? false : options.mark_text;
+            options.html_search = (options.html_search == undefined) ? true : options.html_search;
+
+
 
             $(el).hide();
 
@@ -54,8 +56,8 @@ if (typeof Object.create !== "function") {
                     function (event) {
                         event.preventDefault();
                         txt = $(searchinput).val()
-                        $('.' + options.container).attr('data-show',0)
-                    
+                        $('.' + options.container).attr('data-show', 0)
+
 
                         if (info) {
                             $(el).show();
@@ -65,31 +67,31 @@ if (typeof Object.create !== "function") {
                             total = 0
                             totalok = 0
                             totalko = 0
-                     
-                            
+
+
                             $("." + options.container).each(function () {
-                                visible=false
+                                visible = false
                                 total++
-                                $(this).find("." + containersearch).each(function () {                              
-                                if (visible !=true) {
-                                   
-                                    visible=base.busca(options, actionObject, this);
+                                $(this).find("." + containersearch).each(function () {
+                                    if (visible != true) {
+
+                                        visible = base.busca(options, actionObject, this);
+                                    }
+
+                                });
+
+                                if (visible == true) {
+                                    actionObject.ok(this);
+                                    totalok++
+                                } else
+                                {
+                                    actionObject.ko(this);
+                                    totalko++
                                 }
-                                
+
                             });
-                             
-                            if (visible == true) {
-                                actionObject.ok(this);
-                                totalok++
-                            } else
-                            {
-                                actionObject.ko(this);
-                                totalko++
-                            }
-                             
-                            });
-                            
-                                   
+
+
 
                             $(el).find('.total').html(total);
                             $(el).find('.number').html(totalok);
@@ -99,15 +101,15 @@ if (typeof Object.create !== "function") {
                             $(el).hide();
                             actionObject.nope();
                             $("." + options.container).find("." + containersearch).each(function () {
-                                if (options.mark_text != undefined) {  
-                                var re = new RegExp('<span class="'+options.mark_text+'">(.*?)<\/span>', "gi");
-                                  var str = $(this).html();
-                                  var newstr = str.replace(re, "$1");
-                              }
-                                  $(this).html(newstr);
+                                if (options.mark_text != undefined) {
+                                    var re = new RegExp('<span class="' + options.mark_text + '">(.*?)<\/span>', "gi");
+                                    var str = $(this).html();
+                                    var newstr = str.replace(re, "$1");
+                                }
+                                $(this).html(newstr);
                             });
-                            
-                          
+
+
                         }
 
 
@@ -117,27 +119,25 @@ if (typeof Object.create !== "function") {
         },
 
         busca: function (options, actionObject, el) {
-          
-           
+
+
             if (options.mark_text != undefined) {
-            var re = new RegExp('<span class="'+options.mark_text+'">(.*?)<\/span>', "gi");
-            var str = $(el).html();
-            var newstr = str.replace(re, "$1");
-            $(el).html(newstr);
+                var re = new RegExp('<span class="' + options.mark_text + '">(.*?)<\/span>', "gi");
+                var str = $(el).html();
+                var newstr = str.replace(re, "$1");
+                $(el).html(newstr);
             }
 
             search = false;
-            
+
             if (options.html_search)
-               
-                if ($(el).text().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().toUpperCase().indexOf(txt.normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi,"$1$2").normalize().toUpperCase()) != -1) {
+                if ($(el).text().normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().toUpperCase().indexOf(txt.normalize('NFD').replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, "$1$2").normalize().toUpperCase()) != -1) {
                     search = true;
-                    console.log(1)
                     var re = new RegExp("(" + txt + ")", "gi");
                     var str = $(el).text();
-                    
+
                     if (options.mark_text != undefined) {
-                    var newstr = str.replace(re, "<span class='"+options.mark_text+"'>$1</span>");
+                        var newstr = str.replace(re, "<span class='" + options.mark_text + "'>$1</span>");
                     }
                     $(el).html(newstr);
 
@@ -187,14 +187,14 @@ if (typeof Object.create !== "function") {
         },
         ok: function (t) {
             $(t).closest('.' + this.container).show();
-            $(t).closest('.' + this.container).attr('data-show',1);
-          
-            
+            $(t).closest('.' + this.container).attr('data-show', 1);
+
+
         },
         ko: function (t) {
-            if ($(t).closest('.' + this.container).attr('show')!=1) {
-            $(t).closest('.' + this.container).hide();
-        }
+            if ($(t).closest('.' + this.container).attr('show') != 1) {
+                $(t).closest('.' + this.container).hide();
+            }
 
         },
         nope: function () {
@@ -218,13 +218,13 @@ if (typeof Object.create !== "function") {
         ok: function (t) {
             $(t).closest('.' + this.container).removeClass(this.unmark);
             $(t).closest('.' + this.container).addClass(this.mark);
-             $(t).closest('.' + this.container).attr('data-show',1);
+            $(t).closest('.' + this.container).attr('data-show', 1);
         },
         ko: function (t) {
-            if ($(t).closest('.' + this.container).attr('data-show')!=1) {
+            if ($(t).closest('.' + this.container).attr('data-show') != 1) {
                 $(t).closest('.' + this.container).removeClass(this.mark);
                 $(t).closest('.' + this.container).addClass(this.unmark);
-              }
+            }
 
         },
         nope: function () {
