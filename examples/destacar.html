@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script   src="https://code.jquery.com/jquery-2.2.4.min.js"  ></script>
+        <script src="../JsLocalSearch.js"></script>        
+        <style>
+            .contsearch{
+                padding: 20px;
+                margin: 10px;
+                background-color: #b9d5ec
+            }
+            
+            .si{
+                font-weight: bold;
+                color: red;
+            }
+        </style>        
+    </head>
+    <body>
+        <input type="text" id="gsearchsimple" class="form-control"  placeholder="Busca aquí">
+        <BR>          
+        <div class="contsearch"><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+        <div class="contsearch"><div class='gsearch'>MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+        <div class="contsearch"><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+        <div class="contsearch"><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+        <div id="localSearchSimple"></div>
+        <script>$('#localSearchSimple').jsLocalSearch({
+            "mark_text": "si"
+        });</script>
+    </body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="es" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="es" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="es">
+    <!--<![endif]-->
+    <!-- BEGIN HEAD -->
+    <head>
+
+        <meta charset="utf-8" />
+        <title></title>
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script    src="https://code.jquery.com/jquery-1.12.4.min.js"  ></script>
+        <script src="JsLocalSearch.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style >
+
+            .mark {
+                background-color: #d7ffe7 !important
+            }
+
+            .mark .gsearch{
+                font-size: 20px
+            }
+
+
+            .unmark {
+                background-color: #e8e8e8 !important
+            }
+            .unmark .gsearch{
+                font-size: 10px
+            }
+
+            .si{
+                font-weight: bold;
+                color: red;
+            }
+
+            .simple{
+                padding: 10px;
+                margin: 10px;
+                background-color: #b9d5ec
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>JsLocalSearch.js</h1>
+            <hr>
+            <div class="col-lg-12">
+                JsLocalSearch es un buscador local, es decir busca dentro del html y es inmediato.                
+            </div>
+            <div class="col-lg-12">
+                Sus funcionalida basica es buscar dentro listados no paginados ya sea resaltando u ocultando los que no coincidan con los criterios.<br>
+                La filosofia de JsLocalSearch es la facilidad de implementacion sin olvidad la potencia , pero siempre buscando la simplicidad.
+            </div>          
+            <div class="col-lg-12">
+                <h2>Paso 1 - Ejemplo Simple</h2>
+                 <div class='col-lg-12'>
+                    Este es el ejemplo mas simple de todos, busca dentro de contenedores con la clase '.contsearch' en los hijos de clase '.gsearch' el texto de mas de tres silabas que se escribe en un input text con id "gsearchsimple"
+                </div>
+                 <h4>Pruebalo</h4>
+                <input type="text" id="gsearchsimple" class="form-control"  placeholder="Busca aquí, por ejemplo perro">
+                <BR>          
+                <div class="contsearch simple" ><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+                <div class="contsearch simple"  ><div class='gsearch'>MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+                <div class="contsearch simple" ><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+                <div class="contsearch simple" ><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+                <div id="localSearchSimple"></div>
+
+                <h4>Como funciona</h4>
+               
+                <div class='col-lg-12'>
+                    Lo que no este dentro de .gsearch no sera evaluado. Su accion por defecto es ocultar los que no coinciden con la busqueda.<br>
+                    ¿No entiendes lo que digo? te lo explico.<br>
+                    primero necesitas carga el jquery y el JsLocalSearch.js dentro de &lt;head>:
+                    <br>
+                    <b> &lt;script   src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;  &gt;&lt;/script&gt;<br>
+                        &lt;script src=&quot;JsLocalSearch.js&quot;&gt;&lt;/script&gt;<br></b>
+                    metemos en el body: <br><b>  &lt;div id=&quot;localSearchSimple&quot;&gt;&lt;/div&gt;
+                        <br>&lt;script&gt;$('#localSearchSimple').jsLocalSearch();&lt;/script&gt;</b><br>
+                    Ahora necesitaremos un input de tipo texto para poder escribir las palabaras que fiultraran el resaultado, ponlo donde quieras dentro del body:<br>
+                    <b>&lt;input type=&quot;text&quot; id=&quot;gsearchsimple&quot;&gt;</b><br>
+                    Y ahora necesitamos crear la zona donde queremos buscar.
+                    En todos los sitios que queramos que se oculten si no coincide la busqueda le daremos la clase .contsearch, esto no quiere decir que busque en todo el contenedor, simplemente lo ocultara o no dependiendo de la busqueda:<br>
+                    <b>&lt;div class=&quot;contsearch simple&quot; &gt;<br>&lt;div&gt;Aqui no se busca porque no esta entro de .gsearch&lt;/div&gt;<br>
+                        &lt;div class='gsearch'&gt;Aqui si que se busca porque esta dentro de .gsearch&lt;<br>
+                        &lt;div class='gsearch'&gt;Aqui también que se busca porque esta dentro de .gsearch&lt;/div&gt;<br>&lt;/div&gt;</b>
+                    <br>solo buscar dentro de los elementos marcados como .gsearch, es decir no buscara en todo el contendor.Un contebnedor puede tener varios .gsearch como area de busqueda.Puedes crear todos los contenedores  que necesites.En el ejemplo de abajo hay cuatro.<br>
+                    De todas formas tienes un ejemplo simple , abrelo mira el codigo y seguro que te queda claro.
+
+                </div><hr>
+                            
+                  <h4>Codigo</h4>
+                <pre class="prettyprint linenums"><code class="language-html">
+﻿&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;script   src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;  &gt;&lt;/script&gt;
+        &lt;script src=&quot;../JsLocalSearch.js&quot;&gt;&lt;/script&gt;        
+        &lt;style&gt;
+            .contsearch{
+                border-radius: 56px 56px 56px 56px;
+                -moz-border-radius: 56px 56px 56px 56px;
+                -webkit-border-radius: 56px 56px 56px 56px;
+                border: 3px solid #000000;
+                padding: 20px;
+                margin: 10px;
+                background-color: #b9d5ec
+            }
+        &lt;/style&gt;        
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;input type=&quot;text&quot; id=&quot;gsearchsimple&quot; class=&quot;form-control&quot;  placeholder=&quot;Busca aqu&iacute;&quot;&gt;
+        &lt;BR&gt;          
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO ES MUY BONITO Y NEGRO&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRA ES MUY BONITA Y NEGRA&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO COMO SALCHICHAS&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;LAS SALCHICHAS CON TOMATE&lt;/div&gt;&lt;/div&gt;
+
+        &lt;div id=&quot;localSearchSimple&quot;&gt;&lt;/div&gt;
+        &lt;script&gt;$('#localSearchSimple').jsLocalSearch();&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;                                           
+</code></pre>
+              <h4>Ejemplo</h4>
+            <div><a href='examples/simple.html'> ejemplo simple</a></div>
+            
+           
+            <hr>
+            
+            <div class="col-lg-12">
+                <h2>Quizas no quieras ocultar y quieras resaltar</h2>
+                <h4>Pruebalo</h4>
+                    <div class='col-lg-12'>
+                        <input type="text" id="gsearch2" class="form-control"  placeholder="Busca aquí">
+                        <BR>          
+                        <div class="contsearch2 simple" ><div style="font-size:10px">AQUI NO BUSCA</div><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+                        <div class="contsearch2 simple"  ><div class='gsearch'>MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+                        <div class="contsearch2 simple" ><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+                        <div class="contsearch2 simple" ><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+                        <div id="localSearchMark"></div>
+                        
+                        
+                <h4>Como funciona</h4>
+                 Cambiamos el constructor :
+                <pre>     
+        &lt;script&gt;
+                $('#localSearchSimple').jsLocalSearch({
+                &quot;action&quot;: &quot;Mark&quot;,
+                &quot;actionok&quot;: &quot;mark&quot;, //es el estilo que se aplicara al contendor .contsearch si coincide
+                &quot;actionko&quot;: &quot;unmark&quot;,//es el estilo que se aplicara  al contendor .contsearch si no coincide
+            })
+        &lt;/script&gt;
+                    </pre>  
+                    Tendremos que definir los estilos:
+                    <pre>  
+        &lt;style &gt;
+
+            .mark {
+                background-color: #d7ffe7 !important
+            }
+            .mark .gsearch{
+                font-size: 20px
+            }
+            .unmark {
+                background-color: #e8e8e8 !important
+            }
+            .unmark .gsearch{
+                font-size: 15px
+            }
+        &lt;/style&gt;
+                    </pre>
+
+
+   <h4>Codigo</h4>
+                        <pre class="prettyprint linenums"><code class="language-html">            
+﻿&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;script   src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;  &gt;&lt;/script&gt;
+        &lt;script src=&quot;../JsLocalSearch.js&quot;&gt;&lt;/script&gt;
+
+        &lt;style&gt;
+            .contsearch{
+                border-radius: 56px 56px 56px 56px;
+                -moz-border-radius: 56px 56px 56px 56px;
+                -webkit-border-radius: 56px 56px 56px 56px;
+                border: 3px solid #000000;
+                padding: 20px;
+                margin: 10px;
+                background-color: #b9d5ec
+            }
+        &lt;/style&gt;
+        &lt;style &gt;
+
+
+            .mark {
+                background-color: #d7ffe7 !important
+            }
+            .mark .gsearch{
+                font-size: 20px
+            }
+            .unmark {
+                background-color: #e8e8e8 !important
+            }
+            .unmark .gsearch{
+                font-size: 15px
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;input type=&quot;text&quot; id=&quot;gsearchsimple&quot; class=&quot;form-control&quot;  placeholder=&quot;Busca aqu&iacute;&quot;&gt;
+        &lt;BR&gt;          
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO ES MUY BONITO Y NEGRO&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRA ES MUY BONITA Y NEGRA&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO COMO SALCHICHAS&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;LAS SALCHICHAS CON TOMATE&lt;/div&gt;&lt;/div&gt;
+
+        &lt;div id=&quot;localSearchSimple&quot;&gt;&lt;/div&gt;
+        &lt;script&gt;$('#localSearchSimple').jsLocalSearch({
+                &quot;action&quot;: &quot;Mark&quot;,
+                &quot;actionok&quot;: &quot;mark&quot;,
+                &quot;actionko&quot;: &quot;unmark&quot;,
+            });&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+   <h4>Ejemplo</h4>
+                        <div><a href='examples/mark.html'> ejemplo mark</a></div>
+
+                    </div>
+
+                    <div class="col-lg-12">
+                        <h2>Quieres realtar lo que coincide?</h2>
+
+
+                        <div class='col-lg-12'>
+                            <input type="text" id="gsearch3" class="form-control"  placeholder="Busca aquí">
+                            <BR>          
+                            <div class="contsearch3 simple" ><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+                            <div class="contsearch3 simple"  ><div class='gsearch'>MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+                            <div class="contsearch3 simple" ><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+                            <div class="contsearch3 simple" ><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+                            <div id="localSearch3"></div>
+                            <pre class="prettyprint linenums"><code class="language-html">      
+﻿&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;script   src=&quot;https://code.jquery.com/jquery-2.2.4.min.js&quot;  &gt;&lt;/script&gt;
+        &lt;script src=&quot;../JsLocalSearch.js&quot;&gt;&lt;/script&gt;        
+        &lt;style&gt;
+            .contsearch{
+                border-radius: 56px 56px 56px 56px;
+                -moz-border-radius: 56px 56px 56px 56px;
+                -webkit-border-radius: 56px 56px 56px 56px;
+                border: 3px solid #000000;
+                padding: 20px;
+                margin: 10px;
+                background-color: #b9d5ec
+            }
+            
+            .si{
+                font-weight: bold;
+                color: red;
+            }
+        &lt;/style&gt;        
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;input type=&quot;text&quot; id=&quot;gsearchsimple&quot; class=&quot;form-control&quot;  placeholder=&quot;Busca aqu&iacute;&quot;&gt;
+        &lt;BR&gt;          
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO ES MUY BONITO Y NEGRO&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRA ES MUY BONITA Y NEGRA&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;MI PERRO COMO SALCHICHAS&lt;br&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;contsearch&quot;&gt;&lt;div class='gsearch'&gt;LAS SALCHICHAS CON TOMATE&lt;/div&gt;&lt;/div&gt;
+
+        &lt;div id=&quot;localSearchSimple&quot;&gt;&lt;/div&gt;
+        &lt;script&gt;$('#localSearchSimple').jsLocalSearch({
+            &quot;mark_text&quot;: &quot;si&quot; //este es el estilo que se aplicara a las coincidencias
+        });&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+                            <div><a href='examples/destacar.html'> ejemplo destacar</a></div>
+
+                        </div>
+
+                    </div>
+                    
+                    
+ <div class="col-lg-12">
+                        <h2>Quieres buscar en la descripcion y en las keyword</h2>
+
+
+                        <div class='col-lg-12'>
+                            <input type="text" id="gsearch4" class="form-control"  placeholder="Busca aquí">
+                            <BR>          
+                            <div class="contsearch4 simple" ><div style="font-size:10px">Aqui no se busca porque no esta entro de .gsearch</div><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+                            <div class="contsearch4 simple"  >data-description="esto es una descripción" data-keywords="groso,modo,etc"<div class='gsearch' data-description="esto es una descripción" data-keywords="groso,modo,etc">MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+                            <div class="contsearch4 simple" ><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+                            <div class="contsearch4 simple" ><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+                            <div id="localSearch4"></div>
+
+                            <div><a href='examples/simple.html'> ejemplo simple</a></div>
+
+                        </div>
+
+                    </div>                    
+                        <div class="col-lg-12">
+                            <h2>Quieres que te muestre informacion de la busqueda?</h2>
+
+
+                            <div class='col-lg-12'>
+                                <input type="text" id="gsearch8" class="form-control"  placeholder="Busca aquí">
+                                <BR>          
+                                <div class="contsearch8 simple" ><div style="font-size:10px">Aqui no se busca porque no esta entro de .gsearch</div><div class='gsearch'>MI PERRO ES MUY BONITO Y NEGRO<br></div></div>
+                                <div class="contsearch8 simple"  ><div class='gsearch'>MI PERRA ES MUY BONITA Y NEGRA<br></div></div>
+                                <div class="contsearch8 simple" ><div class='gsearch'>MI PERRO COMO SALCHICHAS<br></div></div>
+                                <div class="contsearch8 simple" ><div class='gsearch'>LAS SALCHICHAS CON TOMATE</div></div>
+
+                                <div id="localSearch8">MOSTRADOS <span class="number">0</span> DE <span class="total">0</span></div>
+
+                                <div><a href='examples/simple.html'> ejemplo simple</a></div>
+
+                            </div>
+                        </div>                    
+                    <div class="col-lg-12">
+                        <h2>Quieres cambiar la clase de los contenedoires?</h2>
+
+                        En un principio el input text es un id llamado '#gsearch', el contenedor es una clase llamada '.contsearch' y la clase donde busca es '.gsearch'
+                        pero las puedes cambiar muy facilmente, asi podras tener varios contenedores en una misma pagina!!!
+
+                        <pre>
+     &lt;script&gt;
+        $('#localSearch5').jsLocalSearch(
+            {
+                &quot;searchinput&quot;: &quot;#gsearch_alternativo&quot;, //input text, puede ser una clase o un id
+                &quot;container&quot;: &quot;contsearch_alternativo&quot;, //container , siempre una clase
+                &quot;containersearch&quot;: &quot;gsearch_alternativo&quot; //donde se busca m siempre una clase
+        });
+    &lt;/script&gt;                            
+
+                        </pre>
+
+                    </div>
+
+                   
+
+                    <div class="col-lg-12">
+                        <h2>Quieres cambiar el numero de caracteres para buscar?</h2>
+
+                        <pre>
+    &lt;script&gt;
+        $('#localSearch7').jsLocalSearch(
+            {
+                "mincaracteres": 1, //numero minimo de caracteres  para buscar, por defecto son 3
+        });
+    &lt;/script&gt; 
+                        </pre>                  
+                        </div>
+
+
+
+
+
+                            <script>$('#localSearchSimple').jsLocalSearch();</script>
+
+
+                            <script>$('#localSearchMark').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch2", //ya
+                                            "container": "contsearch2", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "action": "Mark",
+                                            "actionok": "mark",
+                                            "actionko": "unmark",
+                                            "html_search": true,
+
+                                        });</script>
+
+                            <script>$('#localSearch3').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch3", //ya
+                                            "container": "contsearch3", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "action": "Show",
+
+                                            "html_search": true,
+                                            "mark_text": "si"
+
+
+                                        });</script>
+
+                            <script>$('#localSearch4').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch4", //ya
+                                            "container": "contsearch4", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "action": "Show",
+                                            "keyword_search": true,
+                                            "description_search": true,
+                                            "html_search": true,
+                                            "mark_text": "si"
+
+
+                                        });</script>
+
+
+
+
+                            <script>
+                                $('#localSearch6').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch6", //ya
+                                            "container": "contsearch6", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "keyword_search": true,
+                                            "description_search": true,
+                                            "html_search": false,
+                                        });
+                            </script>
+
+                            <script>
+                                $('#localSearch8').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch8", //ya
+                                            "container": "contsearch8", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "info": true,
+                                        });
+                            </script>
+
+
+                            <script>
+
+
+
+
+                                $('#localSearch').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch", //ya
+                                            "container": "container_search", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "action": "Show",
+                                            "mincaracteres": 1, //ya
+                                            "info": true,
+                                            "keyword_search": true,
+                                            "description_search": true,
+                                            "html_search": true,
+                                            "mark_text": "si"
+
+                                        }
+
+                                );
+
+                                $('#localSearch2').jsLocalSearch(
+                                        {
+                                            "searchinput": "#gsearch2", //ya
+                                            "container": "container_search2", //ya
+                                            "containersearch": "gsearch", //ya
+                                            "action": "Mark",
+                                            "actionok": "mark",
+                                            "actionko": "unmark",
+                                            "mincaracteres": 1, //ya                       
+                                            "html_search": true,
+
+                                        }
+
+                                );
+
+                            </script>
+
+                            </body>
+                            </html>
