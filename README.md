@@ -8,6 +8,7 @@ JsLocalSearch ver: Beta 100
 https://jelk.net/JsLocalSearch (coming soon)
 
 Copyright Carlos López & Ricardo Escanero
+
 Released under the MIT license
 https://jelk.net/JsLocalSearch/license (coming soon)
 
